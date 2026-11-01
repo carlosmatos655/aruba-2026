@@ -1,0 +1,365 @@
+<title>Aruba 2–9 nov</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: columna de lectura con línea de tiempo por día; barra de días fija arriba; cada lugar lleva su pin a Google Maps */
+:root{
+  --bg:#faf5ee; --surface:#ffffff; --ink:#2a1f1a; --muted:#6b5a4e; --line:#eadccd;
+  --cactus:#2f6b4f; --cactus-soft:#e2eee5;
+  --flamingo:#c23a5f; --flamingo-soft:#fbe4ea;
+  --sun:#d99a0b; --sun-soft:#fdf0cf; --warn:#9a5208;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Nunito Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1a1512; --surface:#241d18; --ink:#f3ebe2; --muted:#bba996; --line:#3b3028;
+  --cactus:#86c9a3; --cactus-soft:#1f3428; --flamingo:#f2849f; --flamingo-soft:#3d1d27;
+  --sun:#f2c14e; --sun-soft:#3a2c10; --warn:#f0a85a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1a1512; --surface:#241d18; --ink:#f3ebe2; --muted:#bba996; --line:#3b3028;
+  --cactus:#86c9a3; --cactus-soft:#1f3428; --flamingo:#f2849f; --flamingo-soft:#3d1d27;
+  --sun:#f2c14e; --sun-soft:#3a2c10; --warn:#f0a85a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2.3rem,6.5vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.12rem;font-weight:600}
+p{margin:0}
+a{color:var(--cactus);text-underline-offset:2px}
+a:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--flamingo);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:62ch;font-size:1.06rem}
+.hero{display:flex;flex-direction:column;gap:14px}
+.mark{display:flex;align-items:center;gap:10px}
+.mark svg{flex:none}
+.people{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:.85rem;padding:3px 10px;border-radius:999px;background:var(--cactus-soft);white-space:nowrap}
+.chip.hot{background:var(--sun-soft)}
+.chip.warn{background:transparent;border:1px solid var(--warn);color:var(--warn)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fact b{font-family:var(--display);font-size:1.05rem;font-weight:600}
+.fact .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fact small{color:var(--muted);font-size:.9rem}
+.tbc{color:var(--warn);font-weight:700}
+
+/* barra de días fija */
+nav.days{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;margin-block:-8px;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+nav.days::-webkit-scrollbar{display:none}
+nav.days a{flex:none;text-decoration:none;font-family:var(--mono);font-size:.8rem;min-height:40px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:var(--surface)}
+nav.days a:hover{border-color:var(--cactus)}
+nav.days a.taco{border-color:var(--sun);background:var(--sun-soft)}
+nav.days a.today{background:var(--flamingo);border-color:var(--flamingo);color:var(--surface)}
+
+.day{display:flex;flex-direction:column;gap:14px;scroll-margin-top:72px}
+.dayhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.dnum{font-family:var(--display);font-weight:800;font-size:2.5rem;line-height:1;color:var(--cactus);font-variant-numeric:tabular-nums}
+.dtitle{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.zone{font-size:.92rem;color:var(--muted)}
+.badge-today{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;background:var(--flamingo);color:var(--surface);padding:3px 8px;border-radius:6px}
+.route{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border-radius:8px;background:var(--cactus);color:var(--surface);text-decoration:none;font-weight:700;font-size:.9rem;white-space:nowrap}
+.route:hover{filter:brightness(1.08)}
+.route svg{width:16px;height:16px}
+
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.tl li:last-child{border-bottom:0}
+.tl time{font-family:var(--mono);font-size:.82rem;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.tl .what{min-width:0;display:flex;flex-direction:column;gap:3px}
+.tl .what strong{font-weight:700}
+.tl .what > span{color:var(--muted);font-size:.95rem}
+.tl li.meal time{color:var(--flamingo)}
+.tl li.shop time{color:var(--cactus)}
+.tl li.taco{background:var(--sun-soft);border-radius:8px;padding-inline:10px;margin-inline:-10px;border-bottom-color:transparent}
+
+/* pin a Google Maps */
+a.pin{display:inline-flex;align-items:center;gap:3px;font-size:.78rem;font-weight:700;text-decoration:none;color:var(--flamingo);
+  padding:2px 8px 2px 6px;border:1px solid currentColor;border-radius:999px;vertical-align:2px;margin-left:4px;white-space:nowrap}
+a.pin:hover{background:var(--flamingo-soft)}
+a.pin svg{width:12px;height:12px}
+.pins{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pins a.pin{margin-left:0}
+
+.note{background:var(--sun-soft);border-left:4px solid var(--sun);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.95rem}
+.note.green{background:var(--cactus-soft);border-left-color:var(--cactus)}
+.cost{display:flex;flex-wrap:wrap;gap:8px}
+.cost span{font-family:var(--mono);font-size:.78rem;padding:3px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:580px;font-size:.94rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.p{font-family:var(--mono);font-size:.82rem;white-space:nowrap}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.cols > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:5px}
+.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;min-height:40px;padding-block:6px}
+.check input{margin-top:4px;accent-color:var(--cactus);width:18px;height:18px;flex:none}
+.check input:checked + span{text-decoration:line-through;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:14px}
+.src{font-size:.85rem;color:var(--muted)}
+.src ul{margin:6px 0 0;padding-left:1.1em;display:flex;flex-direction:column;gap:3px}
+@media (max-width:520px){.tl li{grid-template-columns:60px 1fr;gap:10px}.dnum{font-size:2.1rem}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12-10a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM6 15V9a4 4 0 0 1 4-4h2m6 4v6a4 4 0 0 1-4 4h-2"/></symbol>
+</svg>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="mark">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="var(--sun-soft)" stroke="var(--sun)" stroke-width="2"/><path d="M20 7 L22.6 17.4 L33 20 L22.6 22.6 L20 33 L17.4 22.6 L7 20 L17.4 17.4 Z" fill="var(--flamingo)"/></svg>
+    <span class="eyebrow">Lun 2 → Lun 9 de noviembre de 2026 · 7 noches</span>
+  </div>
+  <h1>Aruba 2–9 nov</h1>
+  <p class="lede">Itinerario día a día para cuatro, con auto propio, base en Noord y la idea de cocinar en casa casi todos los días. Cada lugar tiene su pin de Google Maps y cada día un botón con la ruta completa desde el Airbnb.</p>
+  <div class="people"><span class="chip">Carlos</span><span class="chip">Daniel</span><span class="chip">Miguel</span><span class="chip">Desiree</span><span class="chip hot">Martes de tacos</span></div>
+</header>
+
+<section aria-labelledby="base">
+  <h2 id="base">Lo que ya está reservado</h2>
+  <div class="facts">
+    <div class="fact"><span class="k">Vuelo ida · LATAM</span><b>LA2940 · Lima → Aruba</b><small>Lun 2 nov · sale 08:30 (presentarse 05:30, puerta 07:50)</small><small>Llegada estimada ≈ 13:45 hora Aruba <span class="tbc">(por confirmar)</span></small></div>
+    <div class="fact"><span class="k">Vuelo regreso</span><b class="tbc">Por confirmar</b><small>No aparece en los correos de LATAM, solo en el PDF del comprobante. Revisa la hora antes del lunes 9.</small></div>
+    <div class="fact"><span class="k">Airbnb</span><b>Matadera, Noord</b><small>Check-in lun 2 desde 16:00 · check-out lun 9 a las 10:00</small><small>Para llegar usa el link del anfitrión; el pin de abajo es solo referencia de zona.</small><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Matadera%2C%20Noord%2C%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Matadera, Noord</a></div></div>
+    <div class="fact"><span class="k">Auto</span><b>Recojo ≈ 19:00 del lun 2</b><small>Cuando lleguen Miguel y Desiree. Gasolina para la semana ≈ $25–40.</small><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Queen%20Beatrix%20International%20Airport%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Aeropuerto AUA</a></div></div>
+  </div>
+  <p class="note"><b>Equipaje:</b> según LATAM tu reserva solo tiene mochila bajo el asiento, sin maleta de 12 kg ni de bodega. Líquidos de máximo 100 ml: el bloqueador grande cómpralo allá o agrega equipaje.</p>
+</section>
+
+<nav class="days" aria-label="Ir al día">
+  <a href="#d1" data-date="2026-11-02">Lun 2</a><a href="#d2" data-date="2026-11-03" class="taco">Mar 3 · tacos</a><a href="#d3" data-date="2026-11-04">Mié 4</a><a href="#d4" data-date="2026-11-05">Jue 5</a><a href="#d5" data-date="2026-11-06">Vie 6</a><a href="#d6" data-date="2026-11-07">Sáb 7</a><a href="#d7" data-date="2026-11-08">Dom 8</a><a href="#d8" data-date="2026-11-09">Lun 9</a><a href="#comer">Comer</a><a href="#super">Súper</a>
+</nav>
+
+<!-- DÍA 1 -->
+<article class="day" id="d1" data-date="2026-11-02">
+  <div class="dayhead"><span class="dnum">02</span><div class="dtitle"><h2>Lunes · Llegada y centro</h2><span class="zone">Oranjestad a pie (Carlos y Daniel), luego auto y súper</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Queen%20Beatrix%20International%20Airport%20Aruba&destination=Matadera%2C%20Noord%2C%20Aruba&waypoints=Royal%20Plaza%20Mall%20Oranjestad%7CSuperfood%20Aruba%20Bubali&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li><time>≈13:45</time><div class="what"><strong>Llegada a Aruba</strong><span>Wifi gratis en el aeropuerto. Ten a mano la ED Card y el comprobante de alojamiento.</span></div></li>
+    <li><time>14:30</time><div class="what"><strong>Bus Arubus al centro de Oranjestad</strong><span>≈ $2–3 por persona, solo efectivo y sin billetes de $100. Taxi ≈ $20–30 con tarifa fija.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Arubus%20Central%20Bus%20Station%20Oranjestad" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Terminal de buses</a></div></div></li>
+    <li><time>15:00</time><div class="what"><strong>Paseo por el centro</strong><span>Tranvía gratis por Main Street, Renaissance Marketplace y su marina, Royal Plaza Mall, casitas de colores, caballos azules, Wilhelmina Park y las letras de Aruba.</span>
+      <div class="pins">
+        <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Renaissance%20Marketplace%20Oranjestad%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Renaissance Marketplace</a>
+        <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Royal%20Plaza%20Mall%20Oranjestad%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Royal Plaza Mall</a>
+        <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Wilhelmina%20Park%20Oranjestad%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Wilhelmina Park</a>
+        <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Main%20Street%20Caya%20Betico%20Croes%20Oranjestad" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Main Street</a>
+      </div></div></li>
+    <li class="meal"><time>17:00</time><div class="what"><strong>Algo ligero mientras esperan</strong><span>Pastechi ($3–6) o margaritas a $5 (lunes) en 5 o’Clock Somewhere. El centro se vacía después de las 17–18 h.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=5%20o%27Clock%20Somewhere%20Bar%20Grill%20Aruba%20Renaissance" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>5 o’Clock Somewhere</a></div></div></li>
+    <li><time>≈19:00</time><div class="what"><strong>Llegan Miguel y Desiree · recojo del auto</strong><span>Fotos de los rayones, nivel de gasolina y depósito del seguro.</span></div></li>
+    <li class="shop"><time>19:30</time><div class="what"><strong>Compra grande en Superfood</strong><span>Queda de camino al Airbnb. Lleven monedas de 25¢ para el carrito y confirmen la hora de cierre.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Superfood%20Aruba%20Bubali" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Superfood</a></div></div></li>
+    <li><time>20:30</time><div class="what"><strong>Check-in y cena en casa</strong><span>Pregunten si el Airbnb presta sillas de playa y cooler.</span></div></li>
+  </ol>
+  <div class="cost"><span>Bus 2 × $3</span><span>Snack ≈ $15</span><span>Súper inicial ≈ $150–200 para 4</span></div>
+</article>
+
+<!-- DÍA 2 -->
+<article class="day" id="d2" data-date="2026-11-03">
+  <div class="dayhead"><span class="dnum">03</span><div class="dtitle"><h2>Martes · Eagle, Divi y tacos</h2><span class="zone">Costa oeste, 10–15 min del Airbnb</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Matadera%2C%20Noord%2C%20Aruba&destination=Matadera%2C%20Noord%2C%20Aruba&waypoints=Eagle%20Beach%20Aruba%7CDivi%20Beach%20Aruba%7CPalm%20Beach%20Aruba%7CLucy%27s%20Retired%20Surfers%20Bar%20Aruba&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li class="meal"><time>08:00</time><div class="what"><strong>Desayuno en casa y armar cooler</strong><span>Agua, sándwiches y snacks: en las playas no hay tiendas.</span></div></li>
+    <li><time>09:00</time><div class="what"><strong>Eagle Beach</strong><span>Lleguen antes de las 10 por estacionamiento y palapa gratis. Foto en los árboles fofoti.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Eagle%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Eagle Beach</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Fofoti%20Trees%20Eagle%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Árboles fofoti</a></div></div></li>
+    <li><time>12:00</time><div class="what"><strong>Divi Beach</strong><span>A 5 min. Agua más turquesa y algo de ola; fue la favorita de dos videos.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Divi%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Divi Beach</a></div></div></li>
+    <li class="meal"><time>13:30</time><div class="what"><strong>Almuerzo picnic</strong><span>Lo del cooler.</span></div></li>
+    <li><time>15:30</time><div class="what"><strong>Piscina del Airbnb</strong><span>Descanso antes de la noche.</span></div></li>
+    <li><time>18:00</time><div class="what"><strong>Atardecer en Palm Beach</strong><span>Caminen el malecón de los hoteles; el muelle del Bugaloe es el punto clásico.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Bugaloe%20Beach%20Bar%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Muelle Bugaloe</a></div></div></li>
+    <li class="meal taco"><time>19:00</time><div class="what"><strong>Taco Tuesday</strong><span><b>A:</b> Lucy’s Retired Surfers (Oranjestad), todo el día, tacos desde $2 (res $2, pollo $3, veggie $4, pescado o camarón $5). <b>B:</b> Lola Taquería (Palm Beach, más cerca), $6–10 y promos de margarita.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Lucy%27s%20Retired%20Surfers%20Bar%20Restaurant%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Lucy’s</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Lola%20Taqueria%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Lola Taquería</a></div></div></li>
+  </ol>
+  <div class="cost"><span>Playas gratis</span><span>Tacos ≈ $12–20 por persona</span></div>
+</article>
+
+<!-- DÍA 3 -->
+<article class="day" id="d3" data-date="2026-11-04">
+  <div class="dayhead"><span class="dnum">04</span><div class="dtitle"><h2>Miércoles · Norte: tortugas y faro</h2><span class="zone">Punta norte, la zona más cerca de Noord</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Matadera%2C%20Noord%2C%20Aruba&destination=California%20Lighthouse%20Aruba&waypoints=Tres%20Trapi%20Aruba%7CBoca%20Catalina%20Aruba%7CArashi%20Beach%20Aruba%7CAlto%20Vista%20Chapel%20Aruba&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li><time>08:30</time><div class="what"><strong>Tres Trapi</strong><span>Snorkel con tortugas temprano. Zapatos de agua obligatorios: todo es roca.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Tres%20Trapi%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Tres Trapi</a></div></div></li>
+    <li><time>10:00</time><div class="what"><strong>Boca Catalina y Malmok</strong><span>Peces a pocos metros de la orilla. Palapas gratis si llegan temprano.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Boca%20Catalina%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Boca Catalina</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Malmok%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Malmok</a></div></div></li>
+    <li><time>12:00</time><div class="what"><strong>Arashi Beach</strong><span>Agua tranquila, buena para quedarse. Almuerzo del cooler.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Arashi%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Arashi Beach</a></div></div></li>
+    <li><time>15:30</time><div class="what"><strong>Capilla Alto Vista</strong><span>Gratis y tranquila, de camino.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Alto%20Vista%20Chapel%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Alto Vista</a></div></div></li>
+    <li><time>17:30</time><div class="what"><strong>Faro California al atardecer</strong><span>Subir cuesta ≈ $5 por persona. Usen el pin: un video terminó en otro faro.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=California%20Lighthouse%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Faro California</a></div></div></li>
+    <li class="meal"><time>19:30</time><div class="what"><strong>Cena: alitas a $1 o en casa</strong><span>Wing Wednesday en 5 o’Clock Somewhere. El Faro Blanco, al pie del faro, es la opción bonita pero cara.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=5%20o%27Clock%20Somewhere%20Bar%20Grill%20Aruba%20Renaissance" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>5 o’Clock Somewhere</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Faro%20Blanco%20Restaurant%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Faro Blanco</a></div></div></li>
+  </ol>
+  <div class="cost"><span>Faro 4 × $5</span><span>Alitas ≈ $10–15 por persona</span></div>
+</article>
+
+<!-- DÍA 4 -->
+<article class="day" id="d4" data-date="2026-11-05">
+  <div class="dayhead"><span class="dnum">05</span><div class="dtitle"><h2>Jueves · Sur: Baby Beach y Zeerovers</h2><span class="zone">Extremo sur, ≈ 40 min de manejo</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Matadera%2C%20Noord%2C%20Aruba&destination=Matadera%2C%20Noord%2C%20Aruba&waypoints=Mangel%20Halto%20Aruba%7CBaby%20Beach%20Aruba%7CZeerovers%20Savaneta%20Aruba%7CSan%20Nicolas%20Aruba&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li><time>08:00</time><div class="what"><strong>Salida temprano hacia el sur</strong><span>Cooler, sillas y zapatos de agua.</span></div></li>
+    <li><time>08:45</time><div class="what"><strong>Mangel Halto</strong><span>Manglares y plataformas de madera. Ojo con la corriente si nadan lejos.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Mangel%20Halto%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Mangel Halto</a></div></div></li>
+    <li><time>10:30</time><div class="what"><strong>Baby Beach y Rodger’s Beach</strong><span>Laguna poco profunda tipo piscina, con chocitas de sombra. Rodger’s queda al lado.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Baby%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Baby Beach</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Rodgers%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Rodger’s Beach</a></div></div></li>
+    <li class="meal"><time>14:30</time><div class="what"><strong>Zeerovers (Savaneta)</strong><span>Pescado y camarón fresco por peso. Un video pagó $44 por comida para 3–4 personas más $3 por gaseosa. Cola de 30–60 min: vayan a media tarde.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Zeerovers%20Savaneta%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Zeerovers</a></div></div></li>
+    <li><time>16:30</time><div class="what"><strong>Murales de San Nicolás (opcional)</strong><span>Arte urbano gratis, de camino.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=San%20Nicolas%20street%20art%20murals%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>San Nicolás</a></div></div></li>
+    <li class="shop"><time>18:00</time><div class="what"><strong>Reposición de súper</strong><span>Lo que falte hasta el domingo.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Ling%20%26%20Sons%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Ling &amp; Sons</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Superfood%20Aruba%20Bubali" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Superfood</a></div></div></li>
+  </ol>
+  <div class="cost"><span>Zeerovers ≈ $12–15 por persona</span><span>Playas gratis</span></div>
+</article>
+
+<!-- DÍA 5 -->
+<article class="day" id="d5" data-date="2026-11-06">
+  <div class="dayhead"><span class="dnum">06</span><div class="dtitle"><h2>Viernes · Lado salvaje</h2><span class="zone">Costa este y Parque Arikok</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Matadera%2C%20Noord%2C%20Aruba&destination=Matadera%2C%20Noord%2C%20Aruba&waypoints=Casibari%20Rock%20Formation%20Aruba%7CAyo%20Rock%20Formation%20Aruba%7CBushiribana%20Gold%20Mill%20Ruins%20Aruba%7CArikok%20National%20Park%20Visitor%20Center&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li><time>08:00</time><div class="what"><strong>Formaciones rocosas Casibari y Ayo</strong><span>Gratis, mejor temprano por el calor.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Casibari%20Rock%20Formation%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Casibari</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Ayo%20Rock%20Formation%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Ayo</a></div></div></li>
+    <li><time>09:30</time><div class="what"><strong>Costa norte: Natural Bridge y Bushiribana</strong><span>El puente natural está caído, pero el paisaje y las ruinas de la mina de oro valen la parada.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Natural%20Bridge%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Natural Bridge</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Bushiribana%20Gold%20Mill%20Ruins%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Bushiribana</a></div></div></li>
+    <li><time>11:00</time><div class="what"><strong>Parque Nacional Arikok</strong><span>Entrada ≈ $11–15 por adulto. Con auto normal lleguen a las cuevas Fontein y Quadirikiri. La <b>Piscina Natural (Conchi)</b> exige 4×4 o tour: UTV o Jeep ≈ $80–100 por persona.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Arikok%20National%20Park%20Visitor%20Center" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Entrada Arikok</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Quadirikiri%20Cave%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Cueva Quadirikiri</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Fontein%20Cave%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Cueva Fontein</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Natural%20Pool%20Conchi%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Piscina Natural</a></div></div></li>
+    <li class="meal"><time>14:00</time><div class="what"><strong>Almuerzo en casa</strong><span>Tarde libre de piscina.</span></div></li>
+    <li class="meal"><time>19:00</time><div class="what"><strong>Cena fuera: Smokey Joe’s o Iguana Joe’s</strong><span>Costillas y alitas, ≈ $30 por persona. Viernes: 2×1 en cerveza Balashi en 5 o’Clock Somewhere.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Smokey%20Joe%27s%20Island%20Grill%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Smokey Joe’s</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Iguana%20Joe%27s%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Iguana Joe’s</a></div></div></li>
+  </ol>
+  <div class="cost"><span>Arikok 4 × $11–15</span><span>Cena ≈ $30 por persona</span><span class="chip warn">Tour 4×4 opcional</span></div>
+</article>
+
+<!-- DÍA 6 -->
+<article class="day" id="d6" data-date="2026-11-07">
+  <div class="dayhead"><span class="dnum">07</span><div class="dtitle"><h2>Sábado · El día del tour</h2><span class="zone">Elegir uno según presupuesto</span></div></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tour</th><th>Por persona</th><th>Para los 4</th><th>Qué incluye</th></tr></thead>
+    <tbody>
+      <tr><td><b>Catamarán con snorkel</b> (naufragio Antilla)</td><td class="p">$60–80</td><td class="p">$240–320</td><td>Barra libre, a veces comida. La mejor relación precio/experiencia.</td></tr>
+      <tr><td>Palm Island (De Palm)</td><td class="p">$99</td><td class="p">≈ $396</td><td>Con auto propio. 10–17 h: buffet, barra libre, snorkel, tobogán. Flamencos solo desde afuera.</td></tr>
+      <tr><td>Submarino Atlantis</td><td class="p">más caro</td><td class="p">—</td><td>Sin mojarse. Lleguen 30 min antes y paguen estacionamiento extra.</td></tr>
+      <tr><td>Renaissance Island (flamencos)</td><td class="p">$125–150</td><td class="p">$500–600</td><td>Pocos pases por día, se agotan. No lo recomiendo con presupuesto ajustado.</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="tl">
+    <li><time>Mañana</time><div class="what"><strong>Tour elegido</strong><span>La mayoría sale de la marina de Oranjestad o de los muelles de Palm Beach.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Renaissance%20Marina%20Oranjestad%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Marina Oranjestad</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=De%20Palm%20Pier%20Palm%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>De Palm Pier</a></div></div></li>
+    <li><time>Tarde</time><div class="what"><strong>Hadicurari y souvenirs en Palm Beach</strong><span>Vean kitesurf. Los souvenirs salen más baratos aquí que en el puerto de cruceros.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Hadicurari%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Hadicurari</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Paseo%20Herencia%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Paseo Herencia</a></div></div></li>
+    <li class="meal"><time>Noche</time><div class="what"><strong>Salida en Palm Beach</strong><span>Helado viral de yogur griego (≈ $8 + $1 por topping), bares y casinos. Cenen en casa antes para ahorrar.</span></div></li>
+  </ol>
+</article>
+
+<!-- DÍA 7 -->
+<article class="day" id="d7" data-date="2026-11-08">
+  <div class="dayhead"><span class="dnum">08</span><div class="dtitle"><h2>Domingo · Playa favorita y despedida</h2><span class="zone">Libre para repetir lo que más gustó</span></div></div>
+  <ol class="tl">
+    <li><time>09:00</time><div class="what"><strong>Repetir la playa favorita</strong><span>Eagle, Divi o Tres Trapi (pins en los días anteriores).</span></div></li>
+    <li class="shop"><time>12:00</time><div class="what"><strong>Última compra si hace falta</strong><span>Los domingos los súper cierran temprano (algunos a las 13:00). Mejor compren el sábado.</span></div></li>
+    <li><time>15:00</time><div class="what"><strong>Armar mochilas</strong><span>Todo listo para salir a las 10:00 del lunes.</span></div></li>
+    <li class="meal"><time>18:30</time><div class="what"><strong>Cena de despedida bonita</strong><span><b>Flying Fishbone</b> (Savaneta): mesas con los pies en el agua, cara; reserven para las 18:00–18:30. Más moderado: <b>Pinchos</b>, sobre un muelle con atardecer. Domingo: 2×1 en cerveza Chill en 5 o’Clock Somewhere.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Flying%20Fishbone%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Flying Fishbone</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Pinchos%20Grill%20Bar%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Pinchos</a></div></div></li>
+  </ol>
+  <div class="cost"><span>Fishbone ≈ $50+ por persona</span><span>Pinchos ≈ $30–40</span></div>
+</article>
+
+<!-- DÍA 8 -->
+<article class="day" id="d8" data-date="2026-11-09">
+  <div class="dayhead"><span class="dnum">09</span><div class="dtitle"><h2>Lunes · Salida</h2><span class="zone">Check-out 10:00 · vuelo por confirmar</span></div>
+    <a class="route" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Matadera%2C%20Noord%2C%20Aruba&destination=Queen%20Beatrix%20International%20Airport%20Aruba&waypoints=Aruba%20Aloe%20Factory%20Hato%7CSurfside%20Beach%20Aruba&travelmode=driving"><svg><use href="#i-route"/></svg>Ruta del día</a></div>
+  <ol class="tl">
+    <li><time>09:30</time><div class="what"><strong>Limpiar el auto y check-out</strong><span>Devuelvan el auto limpio y con la misma gasolina.</span></div></li>
+    <li><time>10:30</time><div class="what"><strong>Fábrica de Aruba Aloe (Hato)</strong><span>Tour gratis cerca del aeropuerto; buen lugar para regalos. Confirmen que abra ese día.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Aruba%20Aloe%20Factory%20Museum%20Hato" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Aruba Aloe</a></div></div></li>
+    <li><time>Según vuelo</time><div class="what"><strong>Surfside Beach, almuerzo y devolución del auto</strong><span>Lleguen al aeropuerto 3 h antes del vuelo internacional.</span><div class="pins"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Surfside%20Beach%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Surfside Beach</a><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Queen%20Beatrix%20International%20Airport%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Aeropuerto</a></div></div></li>
+  </ol>
+</article>
+
+<section id="comer" aria-labelledby="comer-h" style="scroll-margin-top:72px">
+  <h2 id="comer-h">Dónde comer fuera</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Lugar</th><th>Zona</th><th>Precio aprox.</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td><b>Lucy’s Retired Surfers</b> <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Lucy%27s%20Retired%20Surfers%20Bar%20Restaurant%20Aruba" target="_blank" rel="noopener" aria-label="Lucy’s en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Oranjestad</td><td class="p">desde $2/taco</td><td>Taco Tuesday todo el día.</td></tr>
+      <tr><td>Lola Taquería <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Lola%20Taqueria%20Aruba" target="_blank" rel="noopener" aria-label="Lola Taquería en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Palm Beach</td><td class="p">$6–10</td><td>El martes es su día fuerte.</td></tr>
+      <tr><td>5 o’Clock Somewhere <a class="pin" href="https://www.google.com/maps/search/?api=1&query=5%20o%27Clock%20Somewhere%20Bar%20Grill%20Aruba%20Renaissance" target="_blank" rel="noopener" aria-label="5 o’Clock Somewhere en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Renaissance Marketplace</td><td class="p">$1–12</td><td>Lun margaritas $5 · mié alitas $1 · vie y dom cerveza 2×1.</td></tr>
+      <tr><td><b>Zeerovers</b> <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Zeerovers%20Savaneta%20Aruba" target="_blank" rel="noopener" aria-label="Zeerovers en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Savaneta</td><td class="p">≈ $12–15 pp</td><td>Lo más barato y fresco de la isla.</td></tr>
+      <tr><td>Smokey Joe’s <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Smokey%20Joe%27s%20Island%20Grill%20Aruba" target="_blank" rel="noopener" aria-label="Smokey Joe’s en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Palm Beach</td><td class="p">≈ $30 pp</td><td>Costillas; precio razonable para Aruba.</td></tr>
+      <tr><td>Iguana Joe’s <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Iguana%20Joe%27s%20Aruba" target="_blank" rel="noopener" aria-label="Iguana Joe’s en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Oranjestad</td><td class="p">≈ $30 pp</td><td>Nachos, alitas y empanadas, frente a los cruceros.</td></tr>
+      <tr><td>Pinchos <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Pinchos%20Grill%20Bar%20Aruba" target="_blank" rel="noopener" aria-label="Pinchos en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Oranjestad</td><td class="p">$$</td><td>Atardecer sobre el agua.</td></tr>
+      <tr><td>Flying Fishbone <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Flying%20Fishbone%20Aruba" target="_blank" rel="noopener" aria-label="Flying Fishbone en Maps"><svg><use href="#i-pin"/></svg>Mapa</a></td><td>Savaneta</td><td class="p">$$$</td><td>La foto con los pies en el agua; vale más por la experiencia.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note green">Revisen la cuenta antes de dejar propina: muchos restaurantes ya cargan 15–22%. El agua es gratis si la piden.</p>
+</section>
+
+<section id="super" aria-labelledby="super-h" style="scroll-margin-top:72px">
+  <h2 id="super-h">Súper y ahorro</h2>
+  <div class="cols">
+    <div>
+      <h3>Supermercados</h3>
+      <ul class="plain">
+        <li><b>Superfood</b> <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Superfood%20Aruba%20Bubali" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Mapa</a> (Bubali): el más grande y el más cerca. Quesos holandeses y stroopwafels para regalar.</li>
+        <li><b>Ling &amp; Sons</b> <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Ling%20%26%20Sons%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Mapa</a>: algunos productos más baratos; su deli sirve para almuerzos.</li>
+        <li><b>PriceSmart</b> <a class="pin" href="https://www.google.com/maps/search/?api=1&query=PriceSmart%20Aruba" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Mapa</a>: más barato, pero pide membresía.</li>
+        <li>Horario típico: lun–sáb 8–20 h, domingos solo en la mañana.</li>
+        <li>Referencia de un video: pan, jamón, jugos, agua y cerveza ≈ $103. La carne sale cara; pollo y pasta rinden más.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Para no gastar de más</h3>
+      <ul class="plain">
+        <li>Todas las playas son públicas y las palapas son gratis si llegan temprano.</li>
+        <li>Estacionar en playas es gratis. En el centro es pagado (máquina con placa): la multa es $49 y la grúa $89.</li>
+        <li>Paguen en dólares o con tarjeta; cambien pocos florines.</li>
+        <li>Descarguen el mapa de Aruba en Google Maps para usarlo sin señal.</li>
+        <li>Rotondas: manténganse a la derecha y fíjense en la salida antes de entrar.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="check-h">
+  <h2 id="check-h">Antes de salir</h2>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox" id="c1"><span>Completar la documentación y el check-in de Carlos en LATAM (el correo dice que está pendiente).</span></label></li>
+    <li><label><input type="checkbox" id="c2"><span>Confirmar la hora del vuelo de regreso en el PDF del comprobante.</span></label></li>
+    <li><label><input type="checkbox" id="c3"><span>ED Card de los cuatro (la de Carlos ya está aprobada).</span></label></li>
+    <li><label><input type="checkbox" id="c4"><span>Vacuna de fiebre amarilla y seguro de viaje.</span></label></li>
+    <li><label><input type="checkbox" id="c5"><span>Zapatos de agua, snorkel, bloqueador biodegradable y gorra.</span></label></li>
+    <li><label><input type="checkbox" id="c6"><span>Efectivo en billetes chicos (el bus no acepta $100) y monedas de 25¢.</span></label></li>
+    <li><label><input type="checkbox" id="c7"><span>Descargar el mapa offline de Aruba en Google Maps.</span></label></li>
+    <li><label><input type="checkbox" id="c8"><span>Reservar el tour del sábado y, si quieren, Flying Fishbone.</span></label></li>
+  </ul>
+</section>
+
+<footer class="src">
+  <p>Vuelo y alojamiento sacados de tus correos de LATAM y Airbnb. Recomendaciones de los videos de Pepe Vlogger, AndresinTV, Gabriel Lorenzi y Max el viajero (por subtítulos), más fotogramas de los TikTok de erideviaje_ y tusamigasviajeras. Los pines abren una búsqueda en Google Maps por nombre; precios aproximados, confirmen antes de ir.</p>
+  <ul>
+    <li><a href="https://www.visitaruba.com/aruba-restaurants-specials" target="_blank" rel="noopener">Visit Aruba · ofertas de restaurantes por día</a></li>
+    <li><a href="https://www.aruba.com/us/explore/arikok-national-park" target="_blank" rel="noopener">Aruba.com · Parque Arikok</a></li>
+    <li><a href="https://www.aruba.com/nl/ontdek/lola-taquiria" target="_blank" rel="noopener">Aruba.com · Lola Taquería</a></li>
+    <li><a href="https://www.visitaruba.com/blog/entertainment/is-the-bon-bini-festival-running-in-2026-heres-the-latest-update/" target="_blank" rel="noopener">Visit Aruba · estado del Bon Bini Festival 2026</a></li>
+  </ul>
+</footer>
+
+</div>
+<script>
+(function(){
+  // Checklist recordado en este navegador
+  var KEY='aruba-checklist', saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  document.querySelectorAll('#checklist input').forEach(function(cb){
+    if(saved[cb.id]) cb.checked=true;
+    cb.addEventListener('change',function(){
+      saved[cb.id]=cb.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+    });
+  });
+  // Marca "Hoy" durante el viaje (fecha local del teléfono)
+  var d=new Date(), today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  var day=document.querySelector('article.day[data-date="'+today+'"]');
+  if(day){
+    var b=document.createElement('span'); b.className='badge-today'; b.textContent='Hoy';
+    day.querySelector('.dtitle').appendChild(b);
+    var link=document.querySelector('nav.days a[data-date="'+today+'"]');
+    if(link){link.classList.add('today'); link.setAttribute('aria-current','date');}
+  }
+})();
+</script>
